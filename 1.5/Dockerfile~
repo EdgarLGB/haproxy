@@ -18,7 +18,7 @@ RUN add-apt-repository ppa:vbernat/haproxy-1.5
 RUN apt-get update && apt-get install -y haproxy
 
 # install curl
-RUN apt-get update &&apt-get install -y curl
+RUN apt-get install -y curl && apt-get update
 
 RUN mkdir -p /etc/confd/conf.d
 RUN mkdir -p /etc/confd/templates
