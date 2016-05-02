@@ -33,4 +33,7 @@ RUN apt-get update && \
         apt-get clean && \
         rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-CMD ["haproxy", "-f", "/usr/local/etc/haproxy/haproxy.cfg"]
+COPY haproxy.json /tmp/haproxy.json
+COPY haproxy.ctmpl /tmp/haproxy.ctmpl
+
+CMD ["consul-template", "-config=/tmp/haproxy.json"]
