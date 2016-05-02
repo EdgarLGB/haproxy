@@ -1,0 +1,22 @@
+global
+    maxconn 5000
+
+defaults
+    mode tcp
+    timeout connect 5000ms
+    timeout client 50000ms
+    timeout server 50000ms  
+
+listen frontend   
+   bind *:1883
+   balance roundrobin  
+   {{range $tag , $services := services | byTag}}
+   {{if $tag | contains "mosca"}}
+   {{range $services }}
+   {{$name := .Name}}
+   {{range service $name}}
+ server {{.Name}} {{.ID}}:{{.Port}} 
+   {{end}}
+   {{end}} 
+   {{end}}
+   {{end}} 
